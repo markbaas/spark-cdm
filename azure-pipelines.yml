@@ -10,22 +10,23 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: sbt clean compile package
-  displayName: Compile package
-
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
+    sbt clean makePom
+    cp target/scala-*/*.pom pom.xml
   displayName: 'Run a multi-line script'
   
-- task: CopyFiles@2
+- task: MavenAuthenticate@0
   inputs:
-    SourceFolder: 'target'
-    Contents: 'scala-*/*.jar'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    artifactsFeeds: 'DYSAnalytics'
 
-- task: PublishBuildArtifacts@1
+- task: Maven@3
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'spark-cdm-jar'
-    publishLocation: 'Container'
+    mavenPomFile: 'pom.xml'
+    goals: 'deploy'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
