@@ -1,0 +1,28 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+
+- script: |
+    echo '
+    publishTo := Some("AZURE_ARTIFACTS" at "https://dys-ax.pkgs.visualstudio.com/_packaging/DYSAnalytics/maven/v1/")
+    credentials += Credentials(
+          "https://pkgsprodsu3weu.app.pkgs.visualstudio.com/",
+          "dys-ax.pkgs.visualstudio.com",
+          "DYSAnalytics",
+          "${env.SYSTEM_ACCESSTOKEN}")
+    ' >> build.sbt
+  displayName: Configure build.sbt
+
+- script: |
+    cat build.sbt
+    sbt clean compile publish
+  displayName: Build and publish
