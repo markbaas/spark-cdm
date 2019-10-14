@@ -10,23 +10,13 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: |
-    sbt clean makePom
-    cp target/scala-*/*.pom pom.xml
-  displayName: 'Run a multi-line script'
-  
 - task: MavenAuthenticate@0
   inputs:
     artifactsFeeds: 'DYSAnalytics'
 
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    goals: 'deploy'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
+- script: |
+    cat ~/.m2/settings.xml
+    printenv
+    # sbt clean makePom
+    # cp target/scala-*/*.pom pom.xml
+  displayName: 'Run a multi-line script'
