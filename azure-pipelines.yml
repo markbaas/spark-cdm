@@ -10,13 +10,18 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: MavenAuthenticate@0
-  inputs:
-    artifactsFeeds: 'DYSAnalytics'
 
 - script: |
-    cat ~/.m2/settings.xml
-    printenv
-    # sbt clean makePom
-    # cp target/scala-*/*.pom pom.xml
-  displayName: 'Run a multi-line script'
+    
+    cat <<EOF >> build.sbt
+    publishTo := Some("AZURE_ARTIFACTS" at "https://dys-ax.pkgs.visualstudio.com/_packaging/DYSAnalytics/maven/v1/")
+    credentials += Credentials(
+          "https://pkgsprodsu3weu.app.pkgs.visualstudio.com/",
+          "dys-ax.pkgs.visualstudio.com",
+          "DYSAnalytics",
+          "${env.SYSTEM_ACCESSTOKEN}")
+    EOF
+  displayName: Configure build.sbt
+
+- script: |
+    sbt clean compile publish
