@@ -12,15 +12,14 @@ pool:
 steps:
 
 - script: |
-    
-    cat <<EOF >> build.sbt
+    echo '
     publishTo := Some("AZURE_ARTIFACTS" at "https://dys-ax.pkgs.visualstudio.com/_packaging/DYSAnalytics/maven/v1/")
     credentials += Credentials(
           "https://pkgsprodsu3weu.app.pkgs.visualstudio.com/",
           "dys-ax.pkgs.visualstudio.com",
           "DYSAnalytics",
-          "${env.SYSTEM_ACCESSTOKEN}")
-    EOF
+          "$(env.SYSTEM_ACCESSTOKEN)")
+    ' >> build.sbt
   displayName: Configure build.sbt
 
 - script: |
