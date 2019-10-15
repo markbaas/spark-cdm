@@ -18,9 +18,11 @@ steps:
           "https://pkgsprodsu3weu.app.pkgs.visualstudio.com/",
           "dys-ax.pkgs.visualstudio.com",
           "DYSAnalytics",
-          "$(env.SYSTEM_ACCESSTOKEN)")
+          "${env.SYSTEM_ACCESSTOKEN}")
     ' >> build.sbt
   displayName: Configure build.sbt
 
 - script: |
+    cat build.sbt
     sbt clean compile publish
+  displayName: Build and publish
