@@ -40,6 +40,7 @@ class DataConverter(val dateFormats: String = Constants.TIMESTAMP_FORMAT,
     DateType -> CDMDataType.dateTime,
     StringType -> CDMDataType.string,
     DoubleType -> CDMDataType.double,
+    DecimalType -> CDMDataType.decimal,
     DecimalType(Constants.DECIMAL_PRECISION,0) -> CDMDataType.decimal,
     BooleanType -> CDMDataType.boolean,
     TimestampType -> CDMDataType.dateTimeOffset
