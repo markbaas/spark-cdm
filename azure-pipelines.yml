@@ -11,4 +11,6 @@ pool:
 
 steps:
 - script: sbt clean compile publish
+  env:
+    GITHUB_TOKEN: $(GITHUB_TOKEN)
   displayName: Build and publish
