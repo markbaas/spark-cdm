@@ -61,13 +61,13 @@ class DataConverter(val dateFormats: String = Constants.TIMESTAMP_FORMAT,
 
   def dataToString(data: Any, dataType: DataType): String = {
     if(data == null) {
-      null
+      return null
     }
-    else if(dataType == DateType) {
-      dateFormatter.format(data)
-    }
-    else {
-      data.toString
+
+    return dataType match {
+      case DateType => dateFormatter.format(data)
+      case TimestampType => timestampFormatter.format(data.asInstanceOf[Long])
+      case _ => data.toString
     }
   }
 
