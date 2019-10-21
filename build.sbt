@@ -1,13 +1,11 @@
-enablePlugins(GitVersioning)
+import scala.sys.process._
 
 name := "spark-cdm"
 
 // version := s"0.3.${sys.env.get("BUILDNUMBER")}"
+version := ("git describe --tags".!!).trim
 
 scalaVersion := "2.11.8"
-
-git.useGitDescribe := true
-git.baseVersion := "0.3"
 
 libraryDependencies += "org.apache.spark" %% "spark-sql" % "2.4.1" % "provided"
 libraryDependencies += "com.microsoft.azure" % "adal4j" % "1.6.3"
