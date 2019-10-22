@@ -10,5 +10,5 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: sbt clean compile publish
+- script: sbt clean compile package publish
   displayName: Build and publish
