@@ -4,6 +4,7 @@ name := "spark-cdm"
 
 // version := s"0.3.${sys.env.get("BUILDNUMBER")}"
 version := ("git describe --tags".!!).trim
+organization := "com.microsoft.azure"
 
 scalaVersion := "2.11.8"
 
